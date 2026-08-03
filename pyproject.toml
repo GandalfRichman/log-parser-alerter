@@ -1,0 +1,19 @@
+[project]
+name = "log-parser-alerter"
+version = "0.1.0"
+description = "Parses server logs, detects error anomalies, emits an alert summary."
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/logalert"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
