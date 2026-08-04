@@ -30,3 +30,20 @@ def parse_line(line):
         return None
 
     return LogEntry(timestamp=timestamp, level=level, message=message)
+
+def parse_file(path):
+    """Parse a log file. Return (entries, malformed_count)."""
+    entries = []
+    malformed = 0
+
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            entry = parse_line(line)
+            if entry is None:
+                malformed += 1
+            else:
+                entries.append(entry)
+
+    return entries, malformed
