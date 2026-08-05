@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 
 VALID_LEVELS = {"INFO", "WARN", "ERROR"}
 
@@ -32,11 +33,22 @@ def parse_line(line):
     return LogEntry(timestamp=timestamp, level=level, message=message)
 
 def parse_file(path):
-    """Parse a log file. Return (entries, malformed_count)."""
+    """Parse a log file. Return (entries, malformed_count).
+
+    Raises FileNotFoundError if the path does not exist.
+    """
+    log_path = Path(path)
+
+    if not log_path.exists():
+        raise FileNotFoundError(f"Log file not found: {log_path}")
+
+    if log_path.is_dir():
+        raise IsADirectoryError(f"Expected a file, got a directory: {log_path}")
+
     entries = []
     malformed = 0
 
-    with open(path) as f:
+    with open(log_path, encoding="utf-8", errors="replace") as f:
         for line in f:
             if not line.strip():
                 continue
