@@ -1,5 +1,7 @@
 # Log Parser & Alerter
 
+![CI](https://github.com/GandalfRichman/log-parser-alerter/actions/workflows/ci.yml/badge.svg)
+
 ## Project brief
 Server logs are high-volume and nobody reads them, so failures are noticed late.
 This tool solves that by turning raw logs into a short, human-readable warning.

@@ -1,0 +1,31 @@
+name: Log Monitor
+
+on:
+  schedule:
+    - cron: "0 * * * *"     
+  workflow_dispatch:          
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Generate fresh log data
+        run: uv run python src/logalert/generate.py
+
+      - name: Run alerter
+        id: alerter
+        run: uv run python -m logalert data/sample.log -o report.md
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alert-report
+          path: report.md
