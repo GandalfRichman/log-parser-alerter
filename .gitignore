@@ -9,3 +9,4 @@ build/
 *.egg-info/
 data/*.log
 !data/sample.log
+report.md
