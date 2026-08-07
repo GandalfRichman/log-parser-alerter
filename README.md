@@ -17,7 +17,16 @@ when a threshold is breached.
 In development — see the [v1.0 milestone](../../milestone/1).
 
 ## Quickstart
+
 ```bash
 uv sync
-uv run python -m logalert data/sample.log
+uv run python src/logalert/generate.py    # create data/sample.log
+uv run python -m logalert data/sample.log # parse, detect, report
 ```
+
+Exits `0` when clean, `1` when alerts fire, `2` on file errors.
+
+## Configuration
+
+Thresholds live in `src/logalert/detect.py`:
+`BUCKET_MINUTES`, `ERROR_THRESHOLD`, `REPEAT_THRESHOLD`.
